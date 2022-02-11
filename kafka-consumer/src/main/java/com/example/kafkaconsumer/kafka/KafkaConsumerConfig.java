@@ -13,11 +13,11 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
-@EnableKafka
+//@Configuration
+//@EnableKafka
 public class KafkaConsumerConfig {
 
-    @Bean
+    //@Bean
     public ConsumerFactory<String, Student> consumerFactory(){
         Map<String, Object> config = new HashMap<>();
 
@@ -34,10 +34,10 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);
 
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), deserializer);
-        
+
     }
 
-    @Bean
+    //@Bean
     public ConcurrentKafkaListenerContainerFactory<String, Student> concurrentKafkaListenerContainerFactory(){
         ConcurrentKafkaListenerContainerFactory<String, Student> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());

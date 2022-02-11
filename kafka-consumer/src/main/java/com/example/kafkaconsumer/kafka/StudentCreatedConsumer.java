@@ -20,7 +20,7 @@ public class StudentCreatedConsumer {
     private static final String STUDENT_CREATED_TOPIC = "student-created-topic";
     private static final String GROUP_ID = "group-id";
 
-    @KafkaListener(topics = STUDENT_CREATED_TOPIC, groupId = GROUP_ID, containerFactory = "concurrentKafkaListenerContainerFactory")
+    @KafkaListener(topics = STUDENT_CREATED_TOPIC, groupId = GROUP_ID)//, containerFactory = "concurrentKafkaListenerContainerFactory")
     public void consumeMessage(Student message){
         log.info(message.toString());
     }

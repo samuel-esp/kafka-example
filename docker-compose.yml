@@ -1,0 +1,44 @@
+version: '2'
+services:
+
+  kafka-producer:
+    container_name: Kafka-Producer-App
+    build: ./kafka-producer
+    ports:
+      - "8085:8085"
+    depends_on:
+      - "kafka"
+
+  kafka-consumer:
+    container_name: Kafka-Consumer-App
+    build: ./kafka-consumer
+    ports:
+      - "8086:8086"
+    depends_on:
+      - "kafka"
+
+  zookeeper:
+    container_name: Zookeeper
+    image: confluentinc/cp-zookeeper:latest
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+
+  kafka:
+    container_name: Kafka
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - "zookeeper"
+    restart: always
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CREATE_TOPICS: "student-created-topic:1:1"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
